@@ -13,7 +13,6 @@ feedback4 = FeedbackModel(4, 2, 'I hated it even more')
 event_list = [event1,event2,event3]
 feedback_list = [feedback1,feedback2,feedback3,feedback4]
 
-
 class Repository():
     
     def events_get_all(self):
@@ -23,7 +22,7 @@ class Repository():
         return next((event for event in event_list if event.id == int(event_id)), None)
     
     def event_add(self, data):
-        id = int(event_list[len(event_list) - 1].id) + 1
+        id = len(event_list) + 1
         event_list.append(EventModel(id, data['title'], data['description'],data['location'],data['likes'], data['image'], data['event_date']))
         return id
     
@@ -41,43 +40,42 @@ class Repository():
         for event in event_list :
             if (event.id == int(event_id)) :
                 event_list[event_list.index(event)] = EventModel(
-                    event_id, 
-                    old.title if old.title is not None else event.title, 
-                    old.description if old.description is not None else event.description, 
-                    old.location if old.location is not None else event.location, 
-                    old.likes if old.likes is not None else event.likes,
-                    old.image if old.image is not None else event.image, 
-                    old.event_date if old.event_date is not None else event.event_date
-                    )
-                
+                    int(event_id), 
+                    old.title if old.title else event.title, 
+                    old.description if old.description else event.description, 
+                    old.location if old.location else event.location, 
+                    old.likes if old.likes else event.likes,
+                    old.image if old.image else event.image, 
+                    old.event_date if old.event_date else event.event_date
+                    )          
 
-    def feedback_get_all(self, event_id):
+    def feedback_get_all(self):
         return feedback_list
     
     def feedback_get_by_id(self, feedback_id):
         return next((feedback for feedback in feedback_list if feedback.id == int(feedback_id)), None)
     
     def feedback_add(self, data, event_id):
-        id = int(feedback_list[len(feedback_list) - 1].id) + 1
-        feedback_list.append(FeedbackModel(data['content'], event_id, id))
+        id = len(feedback_list) + 1
+        feedback_list.append(FeedbackModel(id, int(event_id), data['content']))
         return id
     
-    def feedback_update(self, data, event_id, feedback_id):
+    def feedback_update(self, data, feedback_id):
         for feedback in feedback_list :
-            if (feedback.id == int(event_id)) :
-                feedback_list[feedback_list.index(feedback)] = FeedbackModel(data['content'], event_id, feedback_id)
+            if (feedback.id == int(feedback_id)) :
+                feedback_list[feedback_list.index(feedback)] = FeedbackModel(int(feedback_id), int(feedback.event_id), data['content'])
 
     def feedback_delete(self, feedback_id):
         feedback_list.remove(next((feedback for feedback in feedback_list if feedback.id == int(feedback_id)), None))
 
-    def feedback_modify(self, data, event_id, feedback_id):
+    def feedback_modify(self, data, feedback_id):
         json_str = str(data).replace("\'", "\"")
         old: FeedbackModel = json.loads(json_str, object_hook=lambda d: FeedbackModel(**d))
         for feedback in feedback_list :
             if (feedback.id == int(feedback_id)) :
-                event_list[event_list.index(feedback)] = EventModel(
-                    event_id,
-                    old.content if old.content is not None else feedback.content, 
-                    feedback_id
+                feedback_list[feedback_list.index(feedback)] = FeedbackModel(
+                    int(feedback_id),
+                    int(feedback.event_id),
+                    old.content if old.content else feedback.content, 
                     )
                 
