@@ -29,7 +29,7 @@ class Repository():
     def event_update(self, data, event_id):
         for event in event_list :
             if (event.id == int(event_id)) :
-                event_list[event_list.index(event)] = EventModel(event_id, data['title'], data['description'], data['location'], data['likes'], data['image'], data['event_date'])
+                event_list[event_list.index(event)] = EventModel(int(event_id), data['title'], data['description'], data['location'], int(data['likes']), data['image'], data['event_date'])
 
     def event_delete(self, event_id):
         event_list.remove(next((current for current in event_list if current.id == int(event_id)), None))
@@ -44,7 +44,7 @@ class Repository():
                     old.title if old.title else event.title, 
                     old.description if old.description else event.description, 
                     old.location if old.location else event.location, 
-                    old.likes if old.likes else event.likes,
+                    int(old.likes) if old.likes else int(event.likes),
                     old.image if old.image else event.image, 
                     old.event_date if old.event_date else event.event_date
                     )          

@@ -85,7 +85,7 @@ def test_feedback_post():
         req.json.return_value = data.__dict__
         repo.feedback_add.return_value = 4
         event = FeedbackList(repo).post(2, req)
-        assert event == len(feedback_list) + 1
+        assert event == 4
 
 def test_feedback_get():
     repo = MagicMock(spec=Repository)
