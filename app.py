@@ -10,9 +10,9 @@ api = Api(app)
 CORS(app)
 
 api.add_resource(EventList, f'{BASE_URL}/events')
-api.add_resource(Event, f'{BASE_URL}/events/<event_id>')
-api.add_resource(FeedbackList, f'{BASE_URL}/events/<event_id>/feedbacks')
-api.add_resource(Feedback, f'{BASE_URL}/events/<event_id>/feedbacks/<feedback_id>')
+api.add_resource(Event, f'{BASE_URL}/event/<event_id>')
+api.add_resource(FeedbackList, f'{BASE_URL}/feedbacks/<event_id>')
+api.add_resource(Feedback, f'{BASE_URL}/feedback/<feedback_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)
