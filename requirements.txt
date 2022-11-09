@@ -1,1 +1,4 @@
-flask_restful 
+flask_restful
+flask-cors
+pytest
+pytest-mock
