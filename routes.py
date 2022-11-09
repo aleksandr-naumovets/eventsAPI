@@ -16,7 +16,7 @@ class EventList(Resource):
     def post(self, req=request):
         print(req)
         data = req.get_json()
-        return repository.event_add(data)
+        return self.repo.event_add(data)
 
 class Event(Resource):
     
@@ -24,18 +24,18 @@ class Event(Resource):
         self.repo = repo
     
     def get(self, event_id):
-        return repository.event_get_by_id(event_id).__dict__
+        return self.repo.event_get_by_id(event_id).__dict__
     
     def put(self, event_id, req=request):
         data = req.get_json()
-        repository.event_update(data, event_id)
+        self.repo.event_update(data, event_id)
         
     def patch(self, event_id, req=request):
         data = req.get_json()
-        repository.event_modify(data, event_id)
+        self.repo.event_modify(data, event_id)
     
     def delete(self, event_id):
-        return repository.event_delete(event_id), 204
+        return self.repo.event_delete(event_id), 204
         
 class FeedbackList(Resource):
     
@@ -48,7 +48,7 @@ class FeedbackList(Resource):
    
     def post(self, event_id, req=request):
         data = req.get_json()
-        return repository.feedback_add(data, event_id)
+        return self.repo.feedback_add(data, event_id)
    
 class Feedback(Resource):
     
@@ -56,16 +56,16 @@ class Feedback(Resource):
         self.repo = repo
     
     def get(self, feedback_id):
-        return repository.feedback_get_by_id(feedback_id).__dict__
+        return self.repo.feedback_get_by_id(feedback_id).__dict__
     
     def put(self, feedback_id, req=request):
         data = req.get_json()
-        repository.feedback_update(data, feedback_id)
+        self.repo.feedback_update(data, feedback_id)
         
     def patch(self, feedback_id, req=request):
         data = req.get_json()
-        repository.feedback_modify(data, feedback_id)
+        self.repo.feedback_modify(data, feedback_id)
     
     def delete(self, feedback_id):
-        return repository.feedback_delete(feedback_id), 204
+        return self.repo.feedback_delete(feedback_id), 204
     
