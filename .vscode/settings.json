@@ -15,5 +15,6 @@
             "password": "root",
             "name": "events_conn"
         }
-    ]
+    ],
+    "python.formatting.provider": "yapf"
 }
