@@ -4,7 +4,7 @@ from flask import g, current_app
 import sql
 
 
-class Repository():
+class Repository:
 
     def get_db(self):
         if 'db' not in g:
@@ -24,7 +24,7 @@ class Repository():
                 event_list.append(
                     EventModel(event_id, row[1], row[2], row[3], row[4],
                                row[5], str(row[6]),
-                    [feedback.__dict__ for feedback in feedbacks]))
+                               [feedback.__dict__ for feedback in feedbacks]))
             ps_cursor.close()
         return event_list
 
@@ -37,12 +37,12 @@ class Repository():
                 ps_cursor = conn.cursor()
                 ps_cursor.execute(
                     f"SELECT id, title, description, location, likes, image, event_date FROM tbl_events WHERE id = {event_id}")
-                event_record = ps_cursor.fetchall()
-                event = EventModel(event_record[0][0], event_record[0][1],
-                                event_record[0][2], event_record[0][3],
-                                event_record[0][4], event_record[0][5],
-                                str(event_record[0][6]),
-                                [feedback.__dict__ for feedback in feedbacks])
+                event_record = ps_cursor.fetchone()
+                event = EventModel(event_record[0], event_record[1],
+                                   event_record[2], event_record[3],
+                                   event_record[4], event_record[5],
+                                   str(event_record[6]),
+                                   [feedback.__dict__ for feedback in feedbacks])
                 ps_cursor.close()
         return event
 
@@ -83,7 +83,6 @@ class Repository():
             ps_cursor.execute(f"DELETE FROM tbl_events WHERE id = {event_id}")
             conn.commit()
             ps_cursor.close()
-        
 
     def modify_event(self, data, event_id):
         old: EventModel = self.get_event_by_id(event_id)
@@ -135,11 +134,11 @@ class Repository():
                 ps_cursor = conn.cursor()
                 ps_cursor.execute(
                     f"SELECT id, event_id, content, created_at FROM tbl_feedbacks WHERE id = {feedback_id}")
-                feedback_record = ps_cursor.fetchall()
-                feedback = FeedbackModel(feedback_record[0][0],
-                                         feedback_record[0][1],
-                                         feedback_record[0][2],
-                                         str(feedback_record[0][3]))
+                feedback_record = ps_cursor.fetchone()
+                feedback = FeedbackModel(feedback_record[0],
+                                         feedback_record[1],
+                                         feedback_record[2],
+                                         str(feedback_record[3]))
                 ps_cursor.close()
         return feedback
 
@@ -148,7 +147,7 @@ class Repository():
         if (conn):
             ps_cursor = conn.cursor()
             ps_cursor.execute(sql.ADD_FEEDBACK,
-                (data['content'], event_id, data['created_at']))
+                              (data['content'], event_id, data['created_at']))
             conn.commit()
             id = ps_cursor.fetchone()[0]
             ps_cursor.close()
@@ -159,7 +158,7 @@ class Repository():
         if (conn):
             ps_cursor = conn.cursor()
             ps_cursor.execute(sql.UPDATE_FEEDBACK,
-                (data['content'], data['created_at'], feedback_id))
+                              (data['content'], data['created_at'], feedback_id))
             conn.commit()
             ps_cursor.close()
 
@@ -185,7 +184,6 @@ class Repository():
         )
         self.update_feedback(updated.__dict__, feedback_id)
 
-
     def check_feedback_existence(self, feedback_id):
         conn = self.get_db()
         if (conn):
@@ -195,7 +193,7 @@ class Repository():
             feedback_existence_flag = ps_cursor.fetchone()
             ps_cursor.close()
         return feedback_existence_flag[0]
-    
+
     def check_feedback_existence_by_event_id(self, event_id):
         conn = self.get_db()
         if (conn):

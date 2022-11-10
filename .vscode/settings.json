@@ -2,8 +2,10 @@
     "python.testing.pytestArgs": [
         "."
     ],
-    "python.testing.unittestEnabled": false,
+    "python.testing.unittestEnabled": true,
     "python.testing.pytestEnabled": true,
+    "python.envFile": "${workspaceFolder}/.env",
+    "python.formatting.provider": "yapf",
     "sqltools.connections": [
         {
             "previewLimit": 50,
@@ -15,6 +17,6 @@
             "password": "root",
             "name": "events_conn"
         }
-    ],
-    "python.formatting.provider": "yapf"
+    ]
+    
 }

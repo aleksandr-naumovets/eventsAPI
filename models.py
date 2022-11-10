@@ -1,5 +1,3 @@
-from typing import Union
-
 class EventModel:
     def __init__(self, id=-1, title=None, description=None, location=None, likes=None, image=None, event_date=None, feedbacks=None):
         self.id = id
