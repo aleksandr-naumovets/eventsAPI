@@ -1,3 +1,4 @@
+import os
 from models import EventModel, FeedbackModel
 from routes import *
 from repository import Repository
@@ -17,6 +18,16 @@ feedback4 = FeedbackModel(4, 2, 'I hated it even more')
 
 event_list = [event1, event2, event3]
 feedback_list = [feedback1, feedback2, feedback3, feedback4]
+
+BASE_URL = os.environ.get("BASE_URL")
+HOST = os.environ.get("HOST")
+DATABASE = os.environ.get("DATABASE")
+DB_PORT = os.environ.get("DB_PORT")
+DB_USER = os.environ.get("DB_USER")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
+MIN = os.environ.get("MIN")
+MAX = os.environ.get("MAX")
+DEBUG = os.environ.get("DEBUG")
 
 def test_eventlist_get():
     load_dotenv(".env")

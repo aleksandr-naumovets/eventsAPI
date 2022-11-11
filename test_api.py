@@ -1,3 +1,4 @@
+import os
 import routes
 from models import EventModel, FeedbackModel
 from unittest.mock import patch
@@ -7,6 +8,15 @@ import json
 from dotenv import load_dotenv
 
 BASE_URL = '/api'
+BASE_URL = os.environ.get("BASE_URL")
+HOST = os.environ.get("HOST")
+DATABASE = os.environ.get("DATABASE")
+DB_PORT = os.environ.get("DB_PORT")
+DB_USER = os.environ.get("DB_USER")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
+MIN = os.environ.get("MIN")
+MAX = os.environ.get("MAX")
+DEBUG = os.environ.get("DEBUG")
 
 event1 = EventModel(1, 'test1', 'test1_desc', 'test1_loc', 2, '', 'test1_date')
 event2 = EventModel(2, 'test2', 'test2_desc', 'test2_loc', 3, '', 'test2_date')
