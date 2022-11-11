@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS public.tbl_events
     "description" varchar(256),
     "location" varchar(256),
     likes integer DEFAULT 0,
-    "image" bytea,
+    "image" varchar(256),
     event_date timestamp without time zone
 );
 
@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS public.tbl_feedbacks
     id serial NOT NULL CONSTRAINT feedbacks_pk PRIMARY KEY,
     event_id integer NOT NULL,
     content varchar(256),
+    created_at timestamp without time zone,
     FOREIGN KEY (event_id) REFERENCES public.tbl_events (id)
 );
 

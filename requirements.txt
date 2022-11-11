@@ -2,3 +2,5 @@ flask_restful
 flask-cors
 pytest
 pytest-mock
+psycopg2-binary
+python-dotenv
