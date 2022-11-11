@@ -4,6 +4,7 @@ from repository import Repository
 from unittest.mock import MagicMock
 from flask import Request
 from app import app
+from dotenv import load_dotenv
 
 event1 = EventModel(1, 'test1', 'test1_desc', 'test1_loc', 2, '', 'test1_date')
 event2 = EventModel(2, 'test2', 'test2_desc', 'test2_loc', 3, '', 'test2_date')
@@ -18,6 +19,7 @@ event_list = [event1, event2, event3]
 feedback_list = [feedback1, feedback2, feedback3, feedback4]
 
 def test_eventlist_get():
+    load_dotenv(".env")
     repo = MagicMock(spec=Repository)
     repo.get_events_all.return_value = event_list
     events = EventList(repo).get()[0]
@@ -26,6 +28,7 @@ def test_eventlist_get():
 
 
 def test_event_post():
+    load_dotenv(".env")
     with app.test_request_context():
         repo = MagicMock(spec=Repository)
         req = MagicMock(spec=Request)
@@ -43,6 +46,7 @@ def test_event_post():
 
 
 def test_event_get():
+    load_dotenv(".env")
     repo = MagicMock(spec=Repository)
     repo.get_event_by_id.return_value = event1
     event = Event(repo).get(1)[0]
@@ -51,6 +55,7 @@ def test_event_get():
 
 
 def test_event_put():
+    load_dotenv(".env")
     with app.test_request_context():
         repo = MagicMock(spec=Repository)
         req = MagicMock(spec=Request)
@@ -62,6 +67,7 @@ def test_event_put():
 
 
 def test_event_patch():
+    load_dotenv(".env")
     with app.test_request_context():
         repo = MagicMock(spec=Repository)
         req = MagicMock(spec=Request)
@@ -73,6 +79,7 @@ def test_event_patch():
 
 
 def test_event_delete():
+    load_dotenv(".env")
     with app.test_request_context():
         repo = MagicMock(spec=Repository)
         repo.delete_event.return_value = None
@@ -81,6 +88,7 @@ def test_event_delete():
 
 
 def test_feedbacklist_get():
+    load_dotenv(".env")
     repo = MagicMock(spec=Repository)
     repo.get_feedbacks_all.return_value = feedback_list
     feedback = FeedbackList(repo).get(1)[0]
@@ -89,6 +97,7 @@ def test_feedbacklist_get():
 
 
 def test_feedback_post():
+    load_dotenv(".env")
     with app.test_request_context():
         repo = MagicMock(spec=Repository)
         req = MagicMock(spec=Request)
@@ -102,6 +111,7 @@ def test_feedback_post():
 
 
 def test_feedback_get():
+    load_dotenv(".env")
     repo = MagicMock(spec=Repository)
     repo.get_feedback_by_id.return_value = feedback1
     feedback = Feedback(repo).get(1)[0]
@@ -110,6 +120,7 @@ def test_feedback_get():
 
 
 def test_feedback_put():
+    load_dotenv(".env")
     with app.test_request_context():
         repo = MagicMock(spec=Repository)
         req = MagicMock(spec=Request)
@@ -121,6 +132,7 @@ def test_feedback_put():
 
 
 def test_feedback_patch():
+    load_dotenv(".env")
     with app.test_request_context():
         repo = MagicMock(spec=Repository)
         req = MagicMock(spec=Request)
@@ -136,6 +148,7 @@ def test_feedback_patch():
 
 
 def test_feedback_delete():
+    load_dotenv(".env")
     with app.test_request_context():
         repo = MagicMock(spec=Repository)
         repo.delete_feedback.return_value = None
