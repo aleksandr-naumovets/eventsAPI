@@ -1,5 +1,5 @@
 # Project name: eventsAPI
 Developers:
-# Srikrishna Hegde
-# Ian
-# Aleksandr Naumovets
+## Srikrishna Hegde
+## Ian
+## Aleksandr Naumovets
