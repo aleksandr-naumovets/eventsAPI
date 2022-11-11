@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS public.tbl_feedbacks
     id serial NOT NULL CONSTRAINT feedbacks_pk PRIMARY KEY,
     event_id integer NOT NULL,
     content varchar(256),
-    created_at timestamp without time zone
+    created_at timestamp without time zone,
     FOREIGN KEY (event_id) REFERENCES public.tbl_events (id)
 );
 
