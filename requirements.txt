@@ -5,3 +5,4 @@ pytest-mock
 python-dotenv
 pytest-dotenv
 psycopg2-binary
+pytest-env
