@@ -16,16 +16,13 @@ feedback2 = FeedbackModel(2, 1, 'I hated it')
 feedback3 = FeedbackModel(3, 2, 'an even more timeless classic')
 feedback4 = FeedbackModel(4, 2, 'I hated it even more')
 
-event_list = [event1, event2, event3]
-feedback_list = [feedback1, feedback2, feedback3, feedback4]
-
-
 class ApiTests(TestCase):
 
     @patch('routes.EventList.get')
     def test_get_all_events(self, test_patch):
         with app.test_client() as client:
             test_patch.return_value = [event1.__dict__, event2.__dict__, event3.__dict__]
+            print(f'{BASE_URL}/events')
             response = client.get(f'{BASE_URL}/events')
             assert response.status_code == 200
             events = json.loads(response.data)
