@@ -6,3 +6,6 @@ python-dotenv
 pytest-dotenv
 psycopg2-binary
 pytest-env
+flask-sqlalchemy
+flask-restless
+flask-oauthlib

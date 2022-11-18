@@ -1,13 +1,14 @@
 from flask_restful import Resource
-from repository import Repository
+from repository.event_repository import EventRepository
 from flask import request
+from repository.feedback_repository import FeedbackRepository
 
-repository = Repository()
-
+event_repository = EventRepository()
+feedback_repository = FeedbackRepository()
 
 class EventList(Resource):
 
-    def __init__(self, repo=repository):
+    def __init__(self, repo=event_repository):
         self.repo = repo
 
     def get(self):
@@ -20,7 +21,7 @@ class EventList(Resource):
 
 class Event(Resource):
 
-    def __init__(self, repo=repository):
+    def __init__(self, repo=event_repository):
         self.repo = repo
 
     def get(self, event_id):
@@ -41,7 +42,7 @@ class Event(Resource):
 
 class FeedbackList(Resource):
 
-    def __init__(self, repo=repository):
+    def __init__(self, repo=feedback_repository):
         self.repo = repo
 
     def get(self, event_id):
@@ -54,7 +55,7 @@ class FeedbackList(Resource):
 
 class Feedback(Resource):
 
-    def __init__(self, repo=repository):
+    def __init__(self, repo=feedback_repository):
         self.repo = repo
 
     def get(self, feedback_id):

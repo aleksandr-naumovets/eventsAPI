@@ -56,3 +56,4 @@ env.list
 .vscode
 dockers
 dummy
+pytest.ini

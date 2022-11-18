@@ -1,6 +1,7 @@
+from repository.feedback_repository import FeedbackRepository
 from models import EventModel, FeedbackModel
 from routes import *
-from repository import Repository
+from repository.event_repository import EventRepository
 from unittest.mock import MagicMock
 from flask import Request
 from app import app
@@ -20,7 +21,7 @@ feedback_list = [feedback1, feedback2, feedback3, feedback4]
 
 def test_eventlist_get():
     load_dotenv(".env")
-    repo = MagicMock(spec=Repository)
+    repo = MagicMock(spec=EventRepository)
     repo.get_events_all.return_value = event_list
     events = EventList(repo).get()[0]
     assert events[0]['id'] == 1
@@ -30,7 +31,7 @@ def test_eventlist_get():
 def test_event_post():
     load_dotenv(".env")
     with app.test_request_context():
-        repo = MagicMock(spec=Repository)
+        repo = MagicMock(spec=EventRepository)
         req = MagicMock(spec=Request)
         data = EventModel(-1, 'tets4_title', 'tets4_desc', 'tets4_loc', 4, [], '2022-11-08T11:12:00')
         req.json.return_value = data.__dict__
@@ -47,7 +48,7 @@ def test_event_post():
 
 def test_event_get():
     load_dotenv(".env")
-    repo = MagicMock(spec=Repository)
+    repo = MagicMock(spec=EventRepository)
     repo.get_event_by_id.return_value = event1
     event = Event(repo).get(1)[0]
     assert event['id'] == 1
@@ -57,7 +58,7 @@ def test_event_get():
 def test_event_put():
     load_dotenv(".env")
     with app.test_request_context():
-        repo = MagicMock(spec=Repository)
+        repo = MagicMock(spec=EventRepository)
         req = MagicMock(spec=Request)
         data = EventModel(-1, 'tets5_title', 'tets5_desc', 'tets5_loc', 4, [], '2022-11-08T12:12:00')
         req.json.return_value = data.__dict__
@@ -69,7 +70,7 @@ def test_event_put():
 def test_event_patch():
     load_dotenv(".env")
     with app.test_request_context():
-        repo = MagicMock(spec=Repository)
+        repo = MagicMock(spec=EventRepository)
         req = MagicMock(spec=Request)
         data = EventModel(-1, 'tets6_title', 'tets6_desc', 'tets6_loc', 4, [], '2022-11-08T11:12:00')
         req.json.return_value = data.__dict__
@@ -81,7 +82,7 @@ def test_event_patch():
 def test_event_delete():
     load_dotenv(".env")
     with app.test_request_context():
-        repo = MagicMock(spec=Repository)
+        repo = MagicMock(spec=EventRepository)
         repo.delete_event.return_value = None
         event = Event(repo).delete(1)
         assert event == (None, 204)
@@ -89,7 +90,7 @@ def test_event_delete():
 
 def test_feedbacklist_get():
     load_dotenv(".env")
-    repo = MagicMock(spec=Repository)
+    repo = MagicMock(spec=FeedbackRepository)
     repo.get_feedbacks_all.return_value = feedback_list
     feedback = FeedbackList(repo).get(1)[0]
     assert feedback[0]['id'] == 1
@@ -99,7 +100,7 @@ def test_feedbacklist_get():
 def test_feedback_post():
     load_dotenv(".env")
     with app.test_request_context():
-        repo = MagicMock(spec=Repository)
+        repo = MagicMock(spec=FeedbackRepository)
         req = MagicMock(spec=Request)
         data = FeedbackModel(-1, 2, 'test7')
         req.json.return_value = data.__dict__
@@ -112,7 +113,7 @@ def test_feedback_post():
 
 def test_feedback_get():
     load_dotenv(".env")
-    repo = MagicMock(spec=Repository)
+    repo = MagicMock(spec=FeedbackRepository)
     repo.get_feedback_by_id.return_value = feedback1
     feedback = Feedback(repo).get(1)[0]
     assert feedback['id'] == 1
@@ -122,7 +123,7 @@ def test_feedback_get():
 def test_feedback_put():
     load_dotenv(".env")
     with app.test_request_context():
-        repo = MagicMock(spec=Repository)
+        repo = MagicMock(spec=FeedbackRepository)
         req = MagicMock(spec=Request)
         data = FeedbackModel(-1, 2, 'I hated it even more test6')
         req.json.return_value = data.__dict__
@@ -134,7 +135,7 @@ def test_feedback_put():
 def test_feedback_patch():
     load_dotenv(".env")
     with app.test_request_context():
-        repo = MagicMock(spec=Repository)
+        repo = MagicMock(spec=FeedbackRepository)
         req = MagicMock(spec=Request)
         string = MagicMock(str=Request)
         j_s_o_n = MagicMock(json=Request)
@@ -150,7 +151,7 @@ def test_feedback_patch():
 def test_feedback_delete():
     load_dotenv(".env")
     with app.test_request_context():
-        repo = MagicMock(spec=Repository)
+        repo = MagicMock(spec=FeedbackRepository)
         repo.delete_feedback.return_value = None
         event = Feedback(repo).delete(2)
         assert event == (None, 204)
