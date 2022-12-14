@@ -6,7 +6,7 @@ from repository.feedback_repository import FeedbackRepository
 event_repository = EventRepository()
 feedback_repository = FeedbackRepository()
 
-class EventList(Resource):
+class EventListAPI(Resource):
 
     def __init__(self, repo=event_repository):
         self.repo = repo
@@ -19,7 +19,7 @@ class EventList(Resource):
         return self.repo.add_event(data).__dict__, 201
 
 
-class Event(Resource):
+class EventAPI(Resource):
 
     def __init__(self, repo=event_repository):
         self.repo = repo
@@ -40,7 +40,7 @@ class Event(Resource):
         return self.repo.delete_event(event_id), 204
 
 
-class FeedbackList(Resource):
+class FeedbackListAPI(Resource):
 
     def __init__(self, repo=feedback_repository):
         self.repo = repo
@@ -53,7 +53,7 @@ class FeedbackList(Resource):
         return self.repo.add_feedback(data, event_id).__dict__, 201
 
 
-class Feedback(Resource):
+class FeedbackAPI(Resource):
 
     def __init__(self, repo=feedback_repository):
         self.repo = repo

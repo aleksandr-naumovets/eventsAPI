@@ -41,7 +41,7 @@ class EventRepository:
             if (conn):
                 ps_cursor = conn.cursor()
                 ps_cursor.execute(
-                    f"SELECT id, title, description, location, likes, image, event_date FROM tbl_events WHERE id = {event_id}")
+                    f"SELECT id, title, description, location, likes, image, event_datetime FROM events WHERE id = {event_id}")
                 event_record = ps_cursor.fetchone()
                 event = EventModel(event_record[0], event_record[1],
                                    event_record[2], event_record[3],
@@ -58,13 +58,13 @@ class EventRepository:
             ps_cursor.execute(
                 sql.ADD_EVENT,
                 (data['title'], data['description'], data['location'],
-                 data['likes'], data['image'], data['event_date']))
+                 data['likes'], data['image'], data['event_datetime']))
             conn.commit()
             id = ps_cursor.fetchone()[0]
             ps_cursor.close()
         return EventModel(id, data['title'], data['description'],
                           data['location'], data['likes'], data['image'],
-                          data['event_date'])
+                          data['event_datetime'])
 
     def update_event(self, data, event_id):
         conn = self.get_db()
@@ -73,7 +73,7 @@ class EventRepository:
             ps_cursor.execute(
                 sql.UPDATE_EVENT,
                 (data['title'], data['description'], data['location'],
-                 int(data['likes']), data['image'], data['event_date'],
+                 int(data['likes']), data['image'], data['event_datetime'],
                  event_id))
             conn.commit()
             ps_cursor.close()
@@ -85,7 +85,7 @@ class EventRepository:
         conn = self.get_db()
         if (conn):
             ps_cursor = conn.cursor()
-            ps_cursor.execute(f"DELETE FROM tbl_events WHERE id = {event_id}")
+            ps_cursor.execute(f"DELETE FROM events WHERE id = {event_id}")
             conn.commit()
             ps_cursor.close()
 
@@ -101,7 +101,7 @@ class EventRepository:
             new.location if new.location is not None else old.location,
             new.likes if new.likes is not None else old.likes,
             new.image if new.image is not None else old.image,
-            new.event_date if new.event_date is not None else old.event_date)
+            new.event_datetime if new.event_datetime is not None else old.event_datetime)
         self.update_event(updated.__dict__, event_id)
 
     def check_event_existence(self, event_id):
@@ -109,7 +109,7 @@ class EventRepository:
         if (conn):
             ps_cursor = conn.cursor()
             ps_cursor.execute(
-                f"SELECT EXISTS(SELECT 1 FROM tbl_events WHERE id = {event_id})")
+                f"SELECT EXISTS(SELECT 1 FROM events WHERE id = {event_id})")
             event_existence_flag = ps_cursor.fetchone()
             ps_cursor.close()
         return event_existence_flag[0]

@@ -7,5 +7,7 @@ pytest-dotenv
 psycopg2-binary
 pytest-env
 flask-sqlalchemy
-flask-restless
+flask-restless-ng
 flask-oauthlib
+google-cloud-storage
+google-cloud

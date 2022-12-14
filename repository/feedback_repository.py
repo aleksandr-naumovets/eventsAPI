@@ -20,7 +20,7 @@ class FeedbackRepository:
                 if (conn):
                     ps_cursor = conn.cursor()
                     ps_cursor.execute(
-                        f"SELECT id, event_id, content, created_at FROM tbl_feedbacks WHERE event_id = {event_id} ORDER BY created_at DESC")
+                        f"SELECT id, event_id, content, created_at FROM feedbacks WHERE event_id = {event_id} ORDER BY created_at DESC")
                     feedback_records = ps_cursor.fetchall()
                     for row in feedback_records:
                         feedback_list.append(
@@ -35,7 +35,7 @@ class FeedbackRepository:
             if (conn):
                 ps_cursor = conn.cursor()
                 ps_cursor.execute(
-                    f"SELECT id, event_id, content, created_at FROM tbl_feedbacks WHERE id = {feedback_id}")
+                    f"SELECT id, event_id, content, created_at FROM feedbacks WHERE id = {feedback_id}")
                 feedback_record = ps_cursor.fetchone()
                 feedback = FeedbackModel(feedback_record[0],
                                          feedback_record[1],
@@ -69,7 +69,7 @@ class FeedbackRepository:
         if (conn):
             ps_cursor = conn.cursor()
             ps_cursor.execute(
-                f"DELETE FROM tbl_feedbacks WHERE id = {feedback_id}")
+                f"DELETE FROM feedbacks WHERE id = {feedback_id}")
             conn.commit()
             ps_cursor.close()
 
@@ -91,7 +91,7 @@ class FeedbackRepository:
         if (conn):
             ps_cursor = conn.cursor()
             ps_cursor.execute(
-                f"SELECT EXISTS(SELECT 1 FROM tbl_feedbacks WHERE id = {feedback_id})")
+                f"SELECT EXISTS(SELECT 1 FROM feedbacks WHERE id = {feedback_id})")
             feedback_existence_flag = ps_cursor.fetchone()
             ps_cursor.close()
         return feedback_existence_flag[0]
@@ -101,7 +101,7 @@ class FeedbackRepository:
         if (conn):
             ps_cursor = conn.cursor()
             ps_cursor.execute(
-                f"SELECT EXISTS(SELECT 1 FROM tbl_feedbacks WHERE event_id = {event_id})")
+                f"SELECT EXISTS(SELECT 1 FROM feedbacks WHERE event_id = {event_id})")
             feedback_existence_flag = ps_cursor.fetchone()
             ps_cursor.close()
         return feedback_existence_flag[0]
@@ -111,7 +111,7 @@ class FeedbackRepository:
         if (conn):
             ps_cursor = conn.cursor()
             ps_cursor.execute(
-                f"SELECT EXISTS(SELECT 1 FROM tbl_events WHERE id = {event_id})")
+                f"SELECT EXISTS(SELECT 1 FROM events WHERE id = {event_id})")
             event_existence_flag = ps_cursor.fetchone()
             ps_cursor.close()
         return event_existence_flag[0]
