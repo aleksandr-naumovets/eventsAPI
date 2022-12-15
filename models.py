@@ -28,14 +28,15 @@ class Feedback(orm_db.Model):
     id = orm_db.Column('id', orm_db.Integer, primary_key = True)
     event_id = orm_db.Column(orm_db.Integer, orm_db.ForeignKey('events.id'))
     content = orm_db.Column(orm_db.String(30))
-    images = orm_db.relationship('Image', backref='feedback', lazy=True)
+    img = orm_db.relationship('Image', backref='feedback', lazy=True)
+    images = orm_db.Column(orm_db.ARRAY(orm_db.String))
     created_at = orm_db.Column(orm_db.DateTime)
     
-    def __init__(self, event_id=None, content=None, created_at=None, images=[]):
+    def __init__(self, event_id=None, content=None, created_at=None, img=[]):
         self.event_id = event_id
         self.content = content
         self.created_at = created_at
-        self.images = images
+        self.img = img
         
 class Event(orm_db.Model):
     __tablename__ = 'events'
@@ -45,16 +46,17 @@ class Event(orm_db.Model):
     description = orm_db.Column(orm_db.String(30))
     location = orm_db.Column(orm_db.String(30))
     likes = orm_db.Column(orm_db.Integer)
-    images = orm_db.relationship('Image', backref='event', lazy=True)
+    img = orm_db.relationship('Image', backref='event', lazy=True)
+    images = orm_db.Column(orm_db.ARRAY(orm_db.String))
     event_datetime = orm_db.Column(orm_db.DateTime)
     feedbacks = orm_db.relationship('Feedback', backref='event', lazy=True)
     
-    def __init__(self, title=None, description=None, location=None, likes=None, images=[], event_datetime=None, feedbacks=[]):
+    def __init__(self, title=None, description=None, location=None, likes=None, img=[], event_datetime=None, feedbacks=[]):
         self.title = title
         self.description = description
         self.location = location
         self.likes = likes
-        self.images = images
+        self.img = img
         self.event_datetime = event_datetime
         self.feedbacks = feedbacks
         
@@ -73,11 +75,12 @@ class Participant(orm_db.Model):
     surname = orm_db.Column(orm_db.String(30))  
     description = orm_db.Column(orm_db.String(30))
     username = orm_db.Column(orm_db.String(30))
-    images = orm_db.relationship('Image', backref='participant', lazy=True)
+    images = orm_db.Column(orm_db.ARRAY(orm_db.String))
+    img = orm_db.relationship('Image', backref='participant', lazy=True)
     events = orm_db.relationship('Event', secondary=events_participants, lazy='subquery',
         backref=orm_db.backref('participants', lazy=True))
     
-    def __init__(self, name=None, surname=None, description=None, events=[], phone_number=None, email=None, username=None, images=[]):
+    def __init__(self, name=None, surname=None, description=None, events=[], phone_number=None, email=None, username=None, img=[]):
         self.name = name
         self.surname = surname
         self.description = description
@@ -85,7 +88,7 @@ class Participant(orm_db.Model):
         self.phone_number = phone_number
         self.email = email
         self.username = username
-        self.images = images
+        self.img = img
 
 class Image(orm_db.Model):
     __tablename__ = 'images'
