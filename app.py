@@ -115,17 +115,14 @@ def append_not_existant_image(images=[], new_image=''):
     for img in images:
         if img == new_image:
             return images
-    return images.append(new_image).sort()
+    images.append(new_image)
+    return images.sort()
     
 image_postprocessors = {'POST_RESOURCE': [save_image]}
-
-def get_feedback(result=None, **kw):
-    print(result)
-feedback_postprocessors = {'POST_RESOURCE': [get_feedback]}
     
 with app.app_context():
     orm_db.create_all()
     apimanager.create_api(Participant, methods=['GET', 'DELETE', 'PATCH', 'POST'])
     apimanager.create_api(Event, methods=['GET', 'DELETE', 'PATCH', 'POST'])
-    apimanager.create_api(Feedback, methods=['GET', 'DELETE', 'PATCH', 'POST'], postprocessors=feedback_postprocessors)
+    apimanager.create_api(Feedback, methods=['GET', 'DELETE', 'PATCH', 'POST'])
     apimanager.create_api(Image, methods=['GET', 'DELETE', 'PATCH', 'POST'], postprocessors=image_postprocessors)

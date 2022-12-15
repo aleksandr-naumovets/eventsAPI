@@ -52,12 +52,12 @@ class Event(orm_db.Model):
     event_datetime = orm_db.Column(orm_db.DateTime)
     feedbacks = orm_db.relationship('Feedback', backref='event', lazy=True)
     
-    def __init__(self, title=None, description=None, location=None, likes=None, img=[], event_datetime=None, feedbacks=[]):
+    def __init__(self, title=None, description=None, location=None, likes=None, images=[], event_datetime=None, feedbacks=[]):
         self.title = title
         self.description = description
         self.location = location
         self.likes = likes
-        self.img = img
+        self.images = images
         self.event_datetime = event_datetime
         self.feedbacks = feedbacks
         
