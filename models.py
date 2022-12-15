@@ -27,16 +27,17 @@ class Feedback(orm_db.Model):
     
     id = orm_db.Column('id', orm_db.Integer, primary_key = True)
     event_id = orm_db.Column(orm_db.Integer, orm_db.ForeignKey('events.id'))
+    # participant_id = orm_db.Column(orm_db.Integer, orm_db.ForeignKey('participant.id'))
     content = orm_db.Column(orm_db.String(30))
     img = orm_db.relationship('Image', backref='feedback', lazy=True)
     images = orm_db.Column(orm_db.ARRAY(orm_db.String))
     created_at = orm_db.Column(orm_db.DateTime)
     
-    def __init__(self, event_id=None, content=None, created_at=None, img=[]):
+    def __init__(self, event_id=None, content=None, created_at=None, images=[]):
         self.event_id = event_id
         self.content = content
         self.created_at = created_at
-        self.img = img
+        self.images = images
         
 class Event(orm_db.Model):
     __tablename__ = 'events'
@@ -79,6 +80,7 @@ class Participant(orm_db.Model):
     img = orm_db.relationship('Image', backref='participant', lazy=True)
     events = orm_db.relationship('Event', secondary=events_participants, lazy='subquery',
         backref=orm_db.backref('participants', lazy=True))
+    # feedbacks = orm_db.relationship('Feedback', backref='participant', lazy=True)
     
     def __init__(self, name=None, surname=None, description=None, events=[], phone_number=None, email=None, username=None, img=[]):
         self.name = name

@@ -76,7 +76,6 @@ def decode(encodeFile=None, filename=None):
         fh.write(binary_img)
     return binary_img
 
-
 def update_entity_images(entityDict=None, filename=None):
     if get_key_by_name(entityDict, 'event_id'):
         images = orm_db.session.query(Event.images).filter(Event.id == entityDict['event_id']).first()[0]
@@ -118,11 +117,15 @@ def append_not_existant_image(images=[], new_image=''):
             return images
     return images.append(new_image).sort()
     
-postprocessors = {'POST_RESOURCE': [save_image]}
+image_postprocessors = {'POST_RESOURCE': [save_image]}
+
+def get_feedback(result=None, **kw):
+    print(result)
+feedback_postprocessors = {'POST_RESOURCE': [get_feedback]}
     
 with app.app_context():
     orm_db.create_all()
     apimanager.create_api(Participant, methods=['GET', 'DELETE', 'PATCH', 'POST'])
     apimanager.create_api(Event, methods=['GET', 'DELETE', 'PATCH', 'POST'])
-    apimanager.create_api(Feedback, methods=['GET', 'DELETE', 'PATCH', 'POST'])
-    apimanager.create_api(Image, methods=['GET', 'DELETE', 'PATCH', 'POST'], postprocessors=postprocessors)
+    apimanager.create_api(Feedback, methods=['GET', 'DELETE', 'PATCH', 'POST'], postprocessors=feedback_postprocessors)
+    apimanager.create_api(Image, methods=['GET', 'DELETE', 'PATCH', 'POST'], postprocessors=image_postprocessors)
