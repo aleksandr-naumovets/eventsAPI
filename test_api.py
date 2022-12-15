@@ -19,7 +19,7 @@ feedback4 = FeedbackModel(4, 2, 'I hated it even more')
 
 class ApiTests(TestCase):
 
-    @patch('routes.EventList.get')
+    @patch('routes.EventListAPI.get')
     def test_get_all_events(self, test_patch):
         load_dotenv(".env")
         with app.test_client() as client:
@@ -30,7 +30,7 @@ class ApiTests(TestCase):
             events = json.loads(response.data)
             assert events[0]['id'] == 1
 
-    @patch('routes.EventList.post')
+    @patch('routes.EventListAPI.post')
     def test_events_post(self, test_patch):
         load_dotenv(".env")
         with app.test_client() as client:
@@ -46,7 +46,7 @@ class ApiTests(TestCase):
             assert response.status_code == 200
             assert test_patch.return_value == 1
 
-    @patch('routes.Event.get')
+    @patch('routes.EventAPI.get')
     def test_get_event_by_id(self, test_patch):
         load_dotenv(".env")
         with app.test_client() as client:
@@ -56,7 +56,7 @@ class ApiTests(TestCase):
             events = json.loads(response.data)
             assert events['id'] == 1
 
-    @patch('routes.Event.put')
+    @patch('routes.EventAPI.put')
     def test_event_put(self, test_patch):
         load_dotenv(".env")
         with app.test_client() as client:
@@ -72,7 +72,7 @@ class ApiTests(TestCase):
             assert response.status_code == 200
             assert test_patch.return_value is None
 
-    @patch('routes.Event.patch')
+    @patch('routes.EventAPI.patch')
     def test_event_patch(self, test_patch):
         load_dotenv(".env")
         with app.test_client() as client:
@@ -88,7 +88,7 @@ class ApiTests(TestCase):
             assert response.status_code == 200
             assert test_patch.return_value is None
 
-    @patch('routes.Event.delete')
+    @patch('routes.EventAPI.delete')
     def test_event_delete(self, test_patch):
         load_dotenv(".env")
         with app.test_client() as client:
@@ -97,7 +97,7 @@ class ApiTests(TestCase):
             assert response.status_code == 200
             assert test_patch.return_value is None
 
-    @patch('routes.FeedbackList.get')
+    @patch('routes.FeedbackListAPI.get')
     def test_get_all_feedbacks(self, test_patch):
         load_dotenv(".env")
         with app.test_client() as client:
@@ -107,7 +107,7 @@ class ApiTests(TestCase):
             feedbacks = json.loads(response.data)
             assert feedbacks[0]['id'] == 1
 
-    @patch('routes.FeedbackList.post')
+    @patch('routes.FeedbackListAPI.post')
     def test_feedbacks_post(self, test_patch):
         load_dotenv(".env")
         with app.test_client() as client:
@@ -120,7 +120,7 @@ class ApiTests(TestCase):
             assert response.status_code == 200
             assert test_patch.return_value == 1
 
-    @patch('routes.Feedback.get')
+    @patch('routes.FeedbackAPI.get')
     def test_get_feedback_by_id(self, test_patch):
         load_dotenv(".env")
         with app.test_client() as client:
@@ -130,7 +130,7 @@ class ApiTests(TestCase):
             feedback = json.loads(response.data)
             assert feedback['id'] == 1
 
-    @patch('routes.Feedback.put')
+    @patch('routes.FeedbackAPI.put')
     def test_feedback_put(self, test_patch):
         load_dotenv(".env")
         with app.test_client() as client:
@@ -143,7 +143,7 @@ class ApiTests(TestCase):
             assert response.status_code == 200
             assert test_patch.return_value is None
 
-    @patch('routes.Feedback.patch')
+    @patch('routes.FeedbackAPI.patch')
     def test_feedback_patch(self, test_patch):
         load_dotenv(".env")
         with app.test_client() as client:
@@ -156,7 +156,7 @@ class ApiTests(TestCase):
             assert response.status_code == 200
             assert test_patch.return_value is None
 
-    @patch('routes.Feedback.delete')
+    @patch('routes.FeedbackAPI.delete')
     def test_feedback_delete(self, test_patch):
         load_dotenv(".env")
         with app.test_client() as client:
