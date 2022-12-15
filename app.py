@@ -23,7 +23,8 @@ DB_PASSWORD = os.environ.get("DB_PASSWORD")
 MIN = os.environ.get("MIN")
 MAX = os.environ.get("MAX")
 DEBUG = os.environ.get("DEBUG")
-BUCKET_NAME = os.environ.get("BUCKET_NAME")
+INPUT_BUCKET_NAME = os.environ.get("INPUT_BUCKET_NAME")
+OUTPUT_BUCKET_NAME = os.environ.get("OUTPUT_BUCKET_NAME")
 PROJECT_ID = os.environ.get("PROJECT_ID")
 
 app = Flask(__name__)
@@ -62,12 +63,17 @@ def save_image(result=None, **kw):
     filename = result['data']['attributes']['name']
     entityDict = get_entity_name_and_ID(result)
     update_entity_images(entityDict, filename)
+    upload_to_bucket(image, filename, INPUT_BUCKET_NAME)
+    upload_to_bucket(image, filename, OUTPUT_BUCKET_NAME)
+    os.remove(f'images/{filename}')
+    
+def upload_to_bucket(image=None, filename=None, bucket_name=None):
     client = storage.Client(PROJECT_ID)
-    bucket = client.get_bucket(BUCKET_NAME)
+    bucket = client.get_bucket(bucket_name)
     blob = bucket.blob(filename)
     decode(image, filename)
     blob.upload_from_filename(f'images/{filename}')
-    os.remove(f'images/{filename}')
+    
     
 def decode(encodeFile=None, filename=None):
     bytes_img = encode(encodeFile, 'utf-8')
