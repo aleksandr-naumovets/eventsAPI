@@ -65,7 +65,7 @@ def save_image(result=None, **kw):
     update_entity_images(entityDict, filename)
     upload_to_bucket(image, filename, INPUT_BUCKET_NAME)
     upload_to_bucket(image, filename, OUTPUT_BUCKET_NAME)
-    os.remove(f'images/{filename}')
+    # os.remove(f'images/{filename}')
     
 def upload_to_bucket(image=None, filename=None, bucket_name=None):
     client = storage.Client(PROJECT_ID)
