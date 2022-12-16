@@ -7,11 +7,11 @@ from repository.event_repository import EventRepository
 from repository.feedback_repository import FeedbackRepository
 
 class EventModelTest:
-    def __init__(self, description=None, location=None, likes=None, event_date=None):
+    def __init__(self, description=None, location=None, likes=None, event_datetime=None):
         self.description = description
         self.location = location
         self.likes = likes
-        self.event_date = event_date
+        self.event_datetime = event_datetime
         
 class FeedbackModelTest:
     def __init__(self, id=-1, event_id=None, content=None, created_at=None):
@@ -40,9 +40,9 @@ event3 = EventModel(3, 'test3', 'test3_desc', 'test3_loc', 4, '', 'test3_date')
 event_list = [event1, event2, event3]
 
 event_row = [
-    (event1.id, event1.title, event1.description, event1.location, event1.likes, event1.image, event1.event_date),
-    (event2.id, event2.title, event2.description, event2.location, event2.likes, event2.image, event2.event_date),
-    (event3.id, event3.title, event3.description, event3.location, event3.likes, event3.image, event3.event_date)
+    (event1.id, event1.title, event1.description, event1.location, event1.likes, event1.image, event1.event_datetime),
+    (event2.id, event2.title, event2.description, event2.location, event2.likes, event2.image, event2.event_datetime),
+    (event3.id, event3.title, event3.description, event3.location, event3.likes, event3.image, event3.event_datetime)
 ]
 
 feedback_row = [
@@ -131,7 +131,7 @@ def test_add_event():
         assert event.location == event3.location
         assert event.description == event3.description
         assert event.image == event3.image
-        assert event.event_date == event3.event_date
+        assert event.event_datetime == event3.event_datetime
         
 def test_modify_event():
     app = Flask(__name__)

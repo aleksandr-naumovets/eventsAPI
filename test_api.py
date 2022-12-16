@@ -6,7 +6,7 @@ from app import app
 import json
 from dotenv import load_dotenv
 
-BASE_URL = '/api'
+BASE_URL = ''
 
 event1 = EventModel(1, 'test1', 'test1_desc', 'test1_loc', 2, '', 'test1_date')
 event2 = EventModel(2, 'test2', 'test2_desc', 'test2_loc', 3, '', 'test2_date')
