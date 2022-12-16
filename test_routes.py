@@ -42,7 +42,7 @@ def test_event_post():
         assert event['location'] == event1.location
         assert event['likes'] == event1.likes
         assert event['image'] == event1.image
-        assert event['event_date'] == event1.event_date
+        assert event['event_datetime'] == event1.event_datetime
         assert event['feedbacks'] == None
 
 
